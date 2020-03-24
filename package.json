@@ -1,0 +1,44 @@
+{
+  "name": "express-mongoose-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "nodemonConfig": {
+    "exec": "npm run dev",
+    "watch": "src"
+  },
+  "scripts": {
+    "start": "npm run prod",
+    "build": "babel src -d dist",
+    "serve": "node dist/index.js",
+    "dev": "cross-env NODE_ENV=development npm run build && npm run serve",
+    "prod": "cross-env NODE_ENV=production npm run build && npm run serve",
+    "lint": "eslint src/*",
+    "test": "jest",
+    "watch:dev": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.3",
+    "http-errors": "^1.7.3",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2"
+  }
+}

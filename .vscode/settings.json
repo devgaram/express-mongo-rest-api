@@ -1,0 +1,7 @@
+{
+  "git.ignoreLimitWarning": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.trailingComma": "all",
+  "editor.formatOnSave": false
+}
