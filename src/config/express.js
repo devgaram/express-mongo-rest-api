@@ -5,9 +5,12 @@ import cors from 'cors';
 import createError from 'http-errors';
 import config from './config';
 import api from '../api';
+import debug from './debug';
 
 const app = express();
 const { env } = config;
+const { errorDebug } = debug;
+
 
 const whitelist = ['http://example1.com', 'http://example2.com'];
 
@@ -38,6 +41,8 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  errorDebug(`status: ${err.status || 500}`);
+  errorDebug(`message: ${err.message}`);
   res.status(err.status || 500).json({
     message: err.message,
     stack: config.env === 'development' ? err.stack : {},
