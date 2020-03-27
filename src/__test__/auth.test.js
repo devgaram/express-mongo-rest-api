@@ -71,7 +71,7 @@ describe('Auth unit tests', () => {
 
     test('POST /api/auth/signup', (done) => {
       server
-        .post('/api/auth/signup')
+        .put('/api/auth/signup')
         .send(userInput)
         .set('Accept', 'application/json')
         // eslint-disable-next-line consistent-return

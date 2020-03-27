@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import db from '../models';
 import config from '../config/config';
+import createError from 'http-errors';
 
 const { Auth } = db;
 
@@ -65,18 +66,18 @@ AuthService.signUp = async (user) => {
 AuthService.signIn = async (user) => {
   try {
     const { userid, password } = user;
-    const { salt } = await Auth.findOne().byUserId(userid).exec();
-    if (!salt) throw new Error('Can not find user');
+    const { salt } = await Auth.findOne().byUserId(userid).exec() || {};
+    if (!salt) return { error: createError(401, 'Can not find userID') };
 
     const encodedPassword = await AuthService.pbkdf2Promise(password, salt);
     const auth = await Auth.findOne().byUser({
       userid,
       password: encodedPassword,
     }).exec();
+    if (!auth) return { error: createError(401, 'Password error') };
 
-    // 토큰 생성
     const token = await AuthService.jwtSignPromise(auth, '20m', 'express-rest-api-server');
-    if (!token) throw new Error('Can not generate token');
+    if (!token) return { error: createError(401, 'Can not generate token') };
 
     const retUser = auth.toObject();
     delete retUser.password;

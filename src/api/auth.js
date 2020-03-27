@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import createError from 'http-errors';
 import AuthService from '../services/auth';
 import AuthMiddleware from '../middlewares/auth';
 import AsyncHandler from '../helper/asyncHandler';
@@ -22,9 +23,11 @@ router.put('/signup', AuthMiddleware.validator, AsyncHandler(async (req, res) =>
   throw new Error('can not create user');
 }));
 
-router.post('/signin', AuthMiddleware.validator, AsyncHandler(async (req, res) => {
-  const { _id, userid, token } = await AuthService.signIn(req.body.user);
-  if (!_id || !userid || !token) throw new Error('Fail sign in');
+router.post('/signin', AuthMiddleware.validator, AsyncHandler(async (req, res, next) => {
+  const {
+    _id, userid, token, error = null,
+  } = await AuthService.signIn(req.body.user) || {};
+  if (error) throw error;
   return res.status(200).json({ _id, userid, token });
 }));
 
