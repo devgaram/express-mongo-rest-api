@@ -15,7 +15,7 @@
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
     "dev": "cross-env NODE_ENV=development npm run build && cross-env NODE_ENV=development DEBUG=app:*,express:* npm run serve",
-    "prod": "cross-env NODE_ENV=production npm run build && npm run serve",
+    "prod": "npm run build && cross-env NODE_ENV=production npm run serve",
     "lint": "eslint src/*",
     "test": "jest --detectOpenHandles",
     "watch:dev": "nodemon"
