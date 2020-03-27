@@ -12,10 +12,14 @@ router.post('/isAvailableUserId', AsyncHandler(async (req, res) => {
   return res.status(200).json({ isAvailable });
 }));
 
-router.post('/signup', AuthMiddleware.validator, AsyncHandler(async (req, res) => {
-  const { _id, userid, token } = await AuthService.signUp(req.body.user);
-  if (!_id || !userid || !token) throw new Error('creating user Failed');
-  return res.status(201).json({ _id, userid, token });
+router.put('/signup', AuthMiddleware.validator, AsyncHandler(async (req, res) => {
+  const isAvailable = await AuthService.isAvailableUserId(req.body.user.userid);
+  if (isAvailable) {
+    const { _id, userid, token } = await AuthService.signUp(req.body.user);
+    if (!_id || !userid || !token) throw new Error('creating user Failed');
+    return res.status(201).json({ _id, userid, token });
+  }
+  throw new Error('can not create user');
 }));
 
 router.post('/signin', AuthMiddleware.validator, AsyncHandler(async (req, res) => {
