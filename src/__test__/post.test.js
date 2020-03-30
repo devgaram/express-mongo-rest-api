@@ -12,15 +12,15 @@ describe('Posts unit tests', () => {
   };
   describe('Test services', () => {
     test('service - create post ', async () => {
-      const ret = await PostService.create(postInput);
+      // const ret = await PostService.create(postInput);
     });
 
     test('service - update post ', async () => {
-      const ret = await PostService.update(postInput);
+      // const ret = await PostService.update(postInput);
     });
 
     test('service - delete post ', async () => {
-      const ret = await PostService.delete(postInput);
+      // const ret = await PostService.delete(postInput);
     });
   });
 });
